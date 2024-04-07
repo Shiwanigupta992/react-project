@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function Users(){
-    const [users, setUsers] = useState([
-        { name: 'mohan', age: 25},
-        { name: 'sohan', age: 24},
-    ])
+    const [users, setUsers] = useState([])
+    useEffect(() =>{
+        fetch('https://jsonplaceholder.typicode.com/users')
+          .then(response => response.json())
+          .then(data =>{
+               setUsers(data)
+          }) 
+    } , [])
+
     return (
         <div>
             <h2>Users</h2>
             <ul>
                 {
                     users.map((users, index)=>{
-                        return <li>{users.name}, {users.age}</li>
+                        return <li>{users.name}, {users.email}</li>
                     })
                 }
             </ul>
